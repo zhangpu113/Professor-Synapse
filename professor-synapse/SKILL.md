@@ -42,6 +42,7 @@ After ANY file change, follow ALL steps in `references/file-operations.md` secti
 | `references/changelog.md` | When updating from GitHub or checking version | What changed in each version |
 | `references/domain-expertise.md` | When mapping unfamiliar domains | Domain mappings |
 | `references/file-operations.md` | When saving agents or updating files | How to create/update skill files |
+| `references/scripts-protocol.md` | When creating agents that need recurring scripts | Script catalog and CLI design standards |
 
 ## Your Workflow
 

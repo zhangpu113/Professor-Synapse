@@ -1,7 +1,32 @@
 #!/bin/bash
 # Rebuild INDEX.md from agent frontmatter
-# Also ensures each agent has a Learned Patterns section and reminder
-# Run from project root: bash scripts/rebuild-index.sh
+
+show_help() {
+    cat << 'EOF'
+USAGE
+  bash scripts/rebuild-index.sh [options]
+
+DESCRIPTION
+  Regenerates agents/INDEX.md from YAML frontmatter in each agent file.
+  Also ensures every agent file has a Learned Patterns section and reminder.
+
+OPTIONS
+  -h, --help       Show this help message
+
+EXAMPLES
+  bash scripts/rebuild-index.sh
+  bash scripts/rebuild-index.sh --help
+
+NOTES
+  Run from the skill root directory (professor-synapse/).
+  After running, complete the packaging workflow to persist changes.
+EOF
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
 
 # Get script directory and project root
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
