@@ -79,6 +79,24 @@ When creating a new agent, first summon 🔎 Domain Researcher. Use their struct
 - **GUIDELINES**: Incorporate "Anti-Patterns to Avoid" and domain vocabulary
 - **Emoji/Title**: Use "Recommended Agent Configuration" suggestions
 
+## Scripts (Optional)
+
+If this agent needs to run the same operation repeatedly (rebuild a cache, fetch external data, transform files), create a script for it rather than embedding the steps in the agent's instructions.
+
+**When a script would benefit this agent, follow `references/scripts-protocol.md`.**
+
+After creating the script, add a **Scripts** section to the agent file:
+
+```markdown
+## Scripts
+
+| Script | Purpose | Invoke |
+|--------|---------|--------|
+| `scripts/[name].sh` | What it does | `bash scripts/[name].sh --help` |
+```
+
+The agent can then invoke `bash scripts/[name].sh --help` at runtime to get usage instructions without needing to read the source.
+
 ## After Creation - MANDATORY
 
 > **⚠️ DO NOT SKIP ANY STEP BELOW. If you do, the agent will NOT be available to the user. Changes are LOST without the full packaging workflow.**
