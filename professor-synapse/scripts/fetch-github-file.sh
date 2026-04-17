@@ -1,19 +1,41 @@
 #!/bin/bash
-# fetch-github-file.sh
 # Fetches raw file content from GitHub by parsing the blob page HTML
-# Works around blocked raw.githubusercontent.com and api.github.com
-#
-# Usage:
-#   ./fetch-github-file.sh <github-blob-url> [output-file]
-#   ./fetch-github-file.sh owner/repo branch path/to/file.md [output-file]
-#
-# Examples:
-#   ./fetch-github-file.sh "https://github.com/ProfSynapse/Professor-Synapse/blob/main/professor-synapse/SKILL.md"
-#   ./fetch-github-file.sh ProfSynapse/Professor-Synapse main professor-synapse/SKILL.md
-#   ./fetch-github-file.sh ProfSynapse/Professor-Synapse main professor-synapse/SKILL.md /tmp/output.md
-#
-# Requires: python3, html2text (pip install html2text)
-# Partner script: github_blob_parser.py (must be in same directory)
+
+show_help() {
+    cat << 'EOF'
+USAGE
+  fetch-github-file.sh <github-blob-url> [output-file]
+  fetch-github-file.sh <owner/repo> <branch> <path/to/file> [output-file]
+
+DESCRIPTION
+  Fetches raw file content from GitHub by parsing the blob page HTML.
+  Works around blocked raw.githubusercontent.com and api.github.com domains.
+
+ARGUMENTS
+  <github-blob-url>          Full GitHub blob URL
+  <owner/repo>               Repository in owner/repo format
+  <branch>                   Branch name (e.g. main)
+  <path/to/file>             File path within the repository
+  [output-file]              Optional: save output to this file (default: stdout)
+
+OPTIONS
+  -h, --help                 Show this help message
+
+EXAMPLES
+  fetch-github-file.sh "https://github.com/ProfSynapse/Professor-Synapse/blob/main/professor-synapse/SKILL.md"
+  fetch-github-file.sh ProfSynapse/Professor-Synapse main professor-synapse/SKILL.md
+  fetch-github-file.sh ProfSynapse/Professor-Synapse main professor-synapse/SKILL.md /tmp/output.md
+
+DEPENDENCIES
+  python3, html2text (auto-installed if missing)
+  github_blob_parser.py (must be in the same directory as this script)
+EOF
+}
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+    show_help
+    exit 0
+fi
 
 set -e
 
