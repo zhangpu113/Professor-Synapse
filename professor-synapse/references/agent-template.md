@@ -1,6 +1,6 @@
 # Agent Creation Template
 
-Use this template when NO existing agent in `agents/` matches the user's need.
+Use this template when NO existing agent in `agents/` matches the user's need. By default, produce a draft in chat first rather than writing files.
 
 ## Required Frontmatter
 
@@ -79,6 +79,16 @@ When creating a new agent, first summon 🔎 Domain Researcher. Use their struct
 - **GUIDELINES**: Incorporate "Anti-Patterns to Avoid" and domain vocabulary
 - **Emoji/Title**: Use "Recommended Agent Configuration" suggestions
 
+## Draft-First Rule
+
+When no existing agent matches the user's need:
+
+1. Draft the proposed agent in chat first
+2. Ask whether the user wants to save it
+3. Only write the file if the user explicitly requests persistence
+
+Research output should inform the draft, not be copied verbatim into it.
+
 ## Scripts (Optional)
 
 If this agent needs to run the same operation repeatedly (rebuild a cache, fetch external data, transform files), create a script for it rather than embedding the steps in the agent's instructions.
@@ -97,42 +107,23 @@ After creating the script, add a **Scripts** section to the agent file:
 
 The agent can then invoke `bash scripts/[name].sh --help` at runtime to get usage instructions without needing to read the source.
 
-## After Creation - MANDATORY
+## After Drafting
 
-> **⚠️ DO NOT SKIP ANY STEP BELOW. If you do, the agent will NOT be available to the user. Changes are LOST without the full packaging workflow.**
+> **Default behavior: do not persist automatically.**
 
-**Claude Desktop cannot edit skills in place.** After creating or editing ANY agent, you MUST complete ALL of these steps:
+After drafting a new agent:
 
-### Step 1: Save the Agent
-```
-create_file → /mnt/skills/user/professor-synapse/agents/[domain]-[specialty].md
-```
+### Step 1: Present the draft in chat
+Show the proposed agent content or a concise summary.
 
-Example: An ML expert for business users -> `agents/ml-business-translator.md`
+### Step 2: Ask for confirmation
+Ask whether the user wants to save it as a file.
 
-### Step 2: Rebuild the Index
-```bash
-cd /mnt/skills/user/professor-synapse && bash scripts/rebuild-index.sh
-```
+### Step 3: Save only if explicitly requested
+If the user confirms, save the agent file in `agents/` using the naming rules above.
 
-### Step 3: Package the Skill
-```bash
-python3 /mnt/skills/examples/skill-creator/scripts/package_skill.py /mnt/skills/user/professor-synapse /home/claude/
-```
-
-### Step 4: Copy to Outputs
-```bash
-cp /home/claude/professor-synapse.skill /mnt/user-data/outputs/
-```
-
-### Step 5: Present to User
-```
-present_files → professor-synapse.skill
-```
-
-The user will then see "Copy to your skills" button to install the updated skill.
-
-**⚠️ If you skip any step, the agent will NOT be available when the user invokes Professor Synapse. The changes are LOST.**
+### Step 4: Rebuild and package only on request
+If the user explicitly wants the saved agent to become part of the packaged skill, then run the rebuild and packaging workflow described in `references/file-operations.md`.
 
 ## Synapse_CoR Declaration
 
@@ -186,3 +177,5 @@ When adding entries to an agent's Learned Patterns section (or to SKILL.md's Glo
 **Where does this pattern belong?**
 - **SKILL.md (Global Learned Patterns)**: Applies across multiple agents or to Professor Synapse's general behavior
 - **Agent file (Learned Patterns section)**: Applies only to one agent's domain
+
+Do not update learned patterns automatically. Treat them as proposed changes until the user explicitly asks to persist them.

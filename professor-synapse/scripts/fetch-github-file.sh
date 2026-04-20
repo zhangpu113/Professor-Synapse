@@ -27,7 +27,7 @@ EXAMPLES
   fetch-github-file.sh ProfSynapse/Professor-Synapse main professor-synapse/SKILL.md /tmp/output.md
 
 DEPENDENCIES
-  python3, html2text (auto-installed if missing)
+  python3, html2text
   github_blob_parser.py (must be in the same directory as this script)
 EOF
 }
@@ -51,8 +51,9 @@ fi
 
 # Check for html2text
 if ! python3 -c "import html2text" 2>/dev/null; then
-    echo "Installing html2text..." >&2
-    pip install html2text --break-system-packages -q
+    echo "Error: missing dependency 'html2text'." >&2
+    echo "Install it manually, then rerun this script." >&2
+    exit 1
 fi
 
 # Parse arguments
@@ -72,6 +73,11 @@ else
     fi
     
     URL="https://github.com/${REPO}/blob/${BRANCH}/${FILEPATH}"
+fi
+
+if [[ "$URL" != https://github.com/* ]]; then
+    echo "Error: only github.com blob URLs are supported" >&2
+    exit 1
 fi
 
 # Fetch and parse

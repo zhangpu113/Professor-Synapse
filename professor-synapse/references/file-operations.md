@@ -1,6 +1,6 @@
 # File Operations Reference
 
-This skill can read and write files within its own directory structure. Use these operations to save new agents and record learned patterns.
+This skill can read files within its own directory structure and may write files only when the user explicitly asks. Use these operations to save approved agents and approved learned-pattern changes.
 
 ## Skill Directory
 
@@ -29,6 +29,15 @@ professor-synapse/
 | `create_file` | Create a new file | `path`, `file_text`, `description` |
 | `str_replace` | Edit existing file | `path`, `old_str`, `new_str` |
 | `bash_tool` | Run shell commands | `command` |
+
+## Persistence Rule
+
+Do not create or modify files by default.
+
+Before saving a new agent or updating learned patterns:
+1. Present the proposed change in chat
+2. Ask for explicit confirmation
+3. Persist only after confirmation
 
 ## How to Save a New Agent
 
@@ -91,9 +100,9 @@ See **Packaging Workflow** below.
 
 ### Packaging Workflow
 
-> **⚠️ MANDATORY after ANY file change. If you skip this, your changes are LOST.**
+Packaging is a separate maintenance task.
 
-**Claude Desktop cannot edit skills in place.** After ANY file change, complete ALL steps:
+Use this workflow only when the user explicitly asks to package, publish, or replace the skill after approved file changes.
 
 ```bash
 # Step 1: Rebuild index
@@ -106,14 +115,12 @@ python3 /mnt/skills/examples/skill-creator/scripts/package_skill.py /mnt/skills/
 cp /home/claude/professor-synapse.skill /mnt/user-data/outputs/
 ```
 
-```
+```text
 # Step 4: Present to user
 present_files → professor-synapse.skill
 ```
 
-The user will see "Copy to your skills" button to install the updated skill.
-
-**⚠️ If you skip the packaging steps, changes will NOT persist when the user invokes Professor Synapse again.**
+Only run these steps after the user explicitly requests packaging or distribution.
 
 ## Alternative: Using bash_tool
 
@@ -138,6 +145,9 @@ cat /mnt/skills/user/professor-synapse/agents/domain-researcher.md
 - **Rebuild index after adding agents** - run `bash scripts/rebuild-index.sh`
 - **For str_replace**: The `old_str` must be unique in the file. Include surrounding context if needed
 - **Read before editing** - use `view` first to see current content and find the right insertion point
+- **Default to draft-first behavior** for any new agent or learned-pattern change
+- **Do not modify core files such as `SKILL.md` without explicit approval**
+- **Prefer writing drafts to a staging location before updating `agents/` when possible**
 
 ## Shell Compatibility Note
 
