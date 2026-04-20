@@ -331,9 +331,9 @@ bash scripts/fetch-github-file.sh USER/REPO BRANCH path/to/file.md /output/path.
 The fetch scripts require:
 - `curl` (standard on most systems)
 - `python3`
-- `html2text` Python package (auto-installed if missing)
+- `html2text` Python package (must be installed manually if missing)
 
 To manually install html2text:
 ```bash
-pip install html2text --break-system-packages
+Install `html2text` manually using your preferred environment management workflow before running the fetch script.
 ```
