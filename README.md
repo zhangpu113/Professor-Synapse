@@ -25,20 +25,21 @@ The classic approach — copy and paste the prompt into any AI chat interface.
 2. Paste into your AI's system prompt or custom instructions
 3. Start chatting!
 
-### 2. Claude Skill (Self-Building)
+### 2. Claude Skill (Draft-First)
 
-A more powerful version designed for Claude. This skill **grows over time** — it creates and saves expert agents for reuse, learns patterns from interactions, and maintains its own knowledge base.
+A more powerful version designed for Claude. This skill is **draft-first by default** — it proposes expert agents in chat, asks before saving files, and treats persistence as an explicit maintenance action.
 
 **Folder:** `professor-synapse/`
 
 **Features:**
-- 🔎 **Domain Researcher** agent that browses the web before creating new experts
-- 📚 **Self-building agent library** — created agents are saved for future sessions
-- 🧠 **Pattern learning** — captures what works and what doesn't, auto-appended to all agents
-- 📋 **Auto-generated index** — agents are automatically catalogued
+- 🔎 **Domain Researcher** agent that browses the web before drafting new experts
+- 📝 **Draft-first expert creation** — new agents are proposed in chat before any save
+- 🧠 **Pattern suggestions** — reusable learnings are proposed instead of auto-written
+- 📋 **Auto-generated index** — agents are catalogued when explicitly rebuilt
 - 🎭 **Multi-agent debates** — convene multiple specialists for complex decisions
-- 🔄 **Smart updates** — fetch updates from GitHub without losing customizations
-- 🔧 **Skill rebuilding** — easy rebuild workflow for local changes
+- 🔄 **Smart updates** — fetch updates from GitHub without blindly overwriting customizations
+- 🔧 **Optional packaging** — rebuild and package only when explicitly requested
+- 🔒 **Safer defaults** — no automatic dependency installation or silent skill self-modification
 
 ---
 
@@ -68,7 +69,7 @@ professor-synapse/
 │   ├── INDEX.md                  # Auto-generated registry
 │   └── domain-researcher.md      # Base research agent
 ├── references/
-│   ├── learned-patterns.md       # What works + anti-patterns
+│   ├── safety-protocol.md        # Safety defaults and trust boundaries
 │   ├── agent-template.md         # Structure for new agents
 │   ├── domain-expertise.md       # Domain mappings
 │   ├── file-operations.md        # How to save/update files
@@ -108,13 +109,13 @@ Then follow these instructions:
 3. **Path A: Single Agent** (most cases)
    - Checks `agents/INDEX.md` for a matching specialist
    - If match found → Loads and summons that agent
-   - If no match → Summons 🔎 Domain Researcher to research the domain, then creates a new expert agent
+   - If no match → Summons 🔎 Domain Researcher to research the domain, then drafts a new expert agent for review
 4. **Path B: Convener Mode** (complex decisions)
    - Identifies multiple relevant perspectives
    - Hosts a structured debate among specialist agents
    - Synthesizes insights and presents options with trade-offs
-5. **Saves new agents** → New agents are stored in `agents/` for future reuse
-6. **Learns patterns** → All agents update `learned-patterns.md` with what worked and what didn't
+5. **Persistence is explicit** → New agents or pattern updates are saved only when the user asks
+6. **Packaging is optional** → Rebuild/package only when the user explicitly requests it
 
 ---
 
@@ -122,7 +123,7 @@ Then follow these instructions:
 
 ### Core Capabilities
 
-+ **Expert Agent Summoning:** Creates specialized agents tailored to your specific task and domain using a structured template.
++ **Expert Agent Summoning:** Loads existing experts or drafts new specialists tailored to your task and domain using a structured template.
 + **Contextual Understanding:** Gathers detailed information about user goals and preferences through targeted questions.
 + **Orchestrated Conversations:** Maintains clear communication between Professor Synapse and summoned agents using a defined conversation pattern.
 + **Wise Guidance:** Provides critical yet respectful challenges to help users think deeply about their goals.
@@ -132,13 +133,15 @@ Then follow these instructions:
 
 + **Multi-Agent Debates (Convener Protocol):** When facing complex decisions with trade-offs, Professor Synapse can convene multiple expert agents to debate from different perspectives, then synthesize their insights into actionable recommendations.
 
-+ **Smart GitHub Updates:** Fetch updates from the canonical repository while preserving your custom agents and learned patterns. The update protocol intelligently merges changes without overwriting your customizations.
-
-+ **Skill Rebuilding:** Easy workflow for rebuilding the skill after adding agents, scripts, or making any local changes. Uses skill-creator to package updates.
-
-+ **Pattern Learning:** All agents (Professor Synapse + summoned specialists) are reminded to update `learned-patterns.md` with what works and what doesn't. This reminder is automatically appended to every agent by the index rebuild script.
-
-+ **GitHub Fetching Scripts:** Helper scripts to fetch files from GitHub despite API restrictions, enabling the update protocol to work reliably.
++ **Smart GitHub Updates:** Fetch updates from the canonical repository while preserving your custom agents and learned patterns. The update protocol is designed to avoid blind overwrites.
++
++ **Skill Rebuilding:** Rebuilding and packaging are explicit maintenance tasks performed only when requested.
++
++ **Pattern Learning:** Agents may propose reusable patterns and anti-patterns, but persistence requires explicit approval.
++
++ **GitHub Fetching Scripts:** Helper scripts fetch files from GitHub without auto-installing dependencies into the host environment.
++
++ **Safety Defaults:** Web content is treated as untrusted input, new agents are drafted before saving, and core skill files are not modified automatically.
 
 ---
 
@@ -161,9 +164,9 @@ Professor Synapse uses a structured approach to help you achieve your goals:
 
 1. **Introduction**: Greets you warmly and asks what you want to accomplish
 2. **Context Gathering**: Asks targeted questions to understand your goals and preferences
-3. **Agent Summoning**: Creates or loads an expert agent suited to your task
+3. **Agent Summoning**: Loads an expert agent or drafts one suited to your task
 4. **Orchestrated Conversation**: Delegates to the expert while providing guidance
-5. **Learning**: Captures patterns and insights for future interactions
+5. **Learning**: Proposes patterns and insights for future persistence
 
 ---
 

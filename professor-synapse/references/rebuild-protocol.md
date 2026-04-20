@@ -2,15 +2,15 @@
 
 ## Purpose
 
-After making local changes to the Professor Synapse skill (adding agents, modifying scripts, updating references), you must rebuild the entire skill using skill-creator and have the user replace it.
+After making local changes to the Professor Synapse skill (adding agents, modifying scripts, updating references), you may rebuild the entire skill using skill-creator when the user wants those changes packaged for installation.
 
-**Critical Understanding:** Skills cannot be edited in place. ANY structural change requires a complete rebuild.
+**Critical Understanding:** Skills cannot be edited in place. Structural changes require a rebuild only when the user wants a packaged replacement.
 
 ---
 
 ## When to Use This Protocol
 
-Use this when the user has made **local changes** to the skill:
+Use this only when the user has made **approved local changes** to the skill and explicitly wants a rebuilt package:
 
 **Common scenarios:**
 - Created a new agent
@@ -147,7 +147,7 @@ present_files → professor-synapse.skill
 | Learned patterns updated | Accumulated knowledge changed (global in SKILL.md or agent-level) |
 | SKILL.md updated | Core behavior changed |
 
-**Key Principle:** Any file change = rebuild with skill-creator + user replaces via button.
+**Key Principle:** Approved file changes may be rebuilt with skill-creator when the user asks for a packaged replacement.
 
 ---
 
@@ -157,9 +157,9 @@ present_files → professor-synapse.skill
 User: "I created a new Python expert agent"
 
 🧙🏾‍♂️: "Great! I see agents/python-expert.md in your skill directory.
-To make it available when you invoke Professor Synapse, I need to rebuild the skill.
+If you want it available in the packaged skill, I can rebuild the skill.
 
-Let me rebuild the index and package the updated skill..."
+Let me know if you want me to rebuild the index and package the updated skill..."
 
 [Runs rebuild-index.sh]
 [Uses skill-creator]
@@ -215,7 +215,7 @@ Then you'll be able to summon the Python expert!"
 
 - **Rebuild is fast** - Usually completes in seconds
 - **Always rebuild index first** - Ensures agents are registered correctly
-- **User controls when to replace** - They click the button when ready
+- **User controls whether to rebuild and replace** - They decide when packaging is needed and click the button when ready
 - **No data loss** - Rebuilding doesn't delete user customizations
 - **Can rebuild multiple times** - If something's wrong, just rebuild again
 
